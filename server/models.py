@@ -28,4 +28,19 @@ class Cyclist(db.Model, SerializerMixin):
 
     def __repr__(self):
         return f'<ID:{self.id}, Name: {self.name}, Age: {self.age}, Hometown: {self.hometown} >'
+
+
+class Race(db.Model, SerializerMixin):
+    __tablename__ = 'races'
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String)
+    location = db.Column(db.String)
+    length = db.Column(db.Float)
+    registration_fee = db.Column(db.Float)
+
+    def __repr__(self):
+        return f'<ID: {self.id}, Name: {self.name}, location: {self.location} \
+                Length: {self.length}, Registration Fee: {self.registration_fee}'
+    
     
