@@ -25,6 +25,9 @@ class Cyclist(db.Model, SerializerMixin):
     age = db.Column(db.Integer)
     hometown = db.Column(db.String)
 
+    registration = db.relationship('Registration', 
+                                   back_populates='cyclist', cascade='all, delete-orphan')
+
 
     def __repr__(self):
         return f'<ID:{self.id}, Name: {self.name}, Age: {self.age}, Hometown: {self.hometown} >'
@@ -38,6 +41,9 @@ class Race(db.Model, SerializerMixin):
     location = db.Column(db.String)
     length = db.Column(db.Float)
     registration_fee = db.Column(db.Float)
+
+    registration = db.relationship('Registration',
+                                   back_populates='race', cascade='all, delete-orphan')
 
     def __repr__(self):
         return f'<ID: {self.id}, Name: {self.name}, location: {self.location} \
