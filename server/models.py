@@ -1,5 +1,3 @@
-from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import MetaData
 from sqlalchemy.orm import validates
 from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy_serializer import SerializerMixin
@@ -13,19 +11,17 @@ convention = {
     "pk": "pk_%(table_name)s"
 }
 
-metadata = MetaData(naming_convention=convention)
-
-db = SQLAlchemy(metadata=metadata)
-
 class Cyclist(db.Model, SerializerMixin):
     __tablename__ = 'cyclists'
+
+    serialize_rules = ('-registrations.cyclist', '-races.cyclsits')
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
     age = db.Column(db.Integer)
     hometown = db.Column(db.String)
 
-    registration = db.relationship('Registration', 
+    registrations = db.relationship('Registration', 
                                    back_populates='cyclist', cascade='all, delete-orphan')
     
     races = association_proxy('registrations', 'race',
@@ -39,13 +35,15 @@ class Cyclist(db.Model, SerializerMixin):
 class Race(db.Model, SerializerMixin):
     __tablename__ = 'races'
 
+    serialize_rules = ('-registrations.race', '-cyclists.races')
+
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String)
+    name = db.Column(db.String(20))
     location = db.Column(db.String)
     length = db.Column(db.Float)
     registration_fee = db.Column(db.Float)
 
-    registration = db.relationship('Registration',
+    registrations = db.relationship('Registration',
                                    back_populates='race', cascade='all, delete-orphan')
     
     cyclists = association_proxy('registrations', 'cyclist',
@@ -53,11 +51,13 @@ class Race(db.Model, SerializerMixin):
 
     def __repr__(self):
         return f'<ID: {self.id}, Name: {self.name}, location: {self.location} \
-                Length: {self.length}, Registration Fee: {self.registration_fee}'
+                Length: {self.length} kms, Registration Fee: ${self.registration_fee}'
     
 
 class Registration(db.Model, SerializerMixin):
     __tablename__ = 'registrations'
+
+    serialize_rules = ('-cyclist.registrations', '-race.registrations')
     
     id = db.Column(db.Integer, primary_key=True)
     bike = db.Column(db.String)
@@ -66,7 +66,7 @@ class Registration(db.Model, SerializerMixin):
     race_id = db.Column(db.Integer, db.ForeignKey('races.id'))   
 
     cyclist = db.relationship('Cyclist', back_populates='registrations')
-    race = db.relationship('Races', back_populates='registrations')
+    race = db.relationship('Race', back_populates='registrations')
 
     def __repr__(self):
         return f'<ID: {self.id}, Bike: {self.bike}>' 
