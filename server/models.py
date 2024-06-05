@@ -27,6 +27,9 @@ class Cyclist(db.Model, SerializerMixin):
 
     registration = db.relationship('Registration', 
                                    back_populates='cyclist', cascade='all, delete-orphan')
+    
+    races = association_proxy('registrations', 'race',
+                              creator=lambda race_obj: Registration(race=race_obj))
 
 
     def __repr__(self):
@@ -44,6 +47,9 @@ class Race(db.Model, SerializerMixin):
 
     registration = db.relationship('Registration',
                                    back_populates='race', cascade='all, delete-orphan')
+    
+    cyclists = association_proxy('registrations', 'cyclist',
+                                 creator=lambda cyclist_obj: Registration(cyclist=cyclist_obj))
 
     def __repr__(self):
         return f'<ID: {self.id}, Name: {self.name}, location: {self.location} \
