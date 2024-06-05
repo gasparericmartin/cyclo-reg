@@ -18,4 +18,14 @@ metadata = MetaData(naming_convention=convention)
 db = SQLAlchemy(metadata=metadata)
 
 class Cyclist(db.Model, SerializerMixin):
-    pass
+    __tablename__ = 'cyclists'
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String)
+    age = db.Column(db.Integer)
+    hometown = db.Column(db.String)
+
+
+    def __repr__(self):
+        return f'<ID:{self.id}, Name: {self.name}, Age: {self.age}, Hometown: {self.hometown} >'
+    
