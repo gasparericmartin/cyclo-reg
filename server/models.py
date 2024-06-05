@@ -43,4 +43,18 @@ class Race(db.Model, SerializerMixin):
         return f'<ID: {self.id}, Name: {self.name}, location: {self.location} \
                 Length: {self.length}, Registration Fee: {self.registration_fee}'
     
+
+class Registration(db.Model, SerializerMixin):
+    __tablename__ = 'registrations'
     
+    id = db.Column(db.Integer, primary_key=True)
+    bike = db.Column(db.String)
+    
+    cyclist_id = db.Column(db.Integer, db.ForeignKey('cyclists.id'))
+    race_id = db.Column(db.Integer, db.ForeignKey('races.id'))   
+
+    cyclist = db.relationship('Cyclist', back_populates='registrations')
+    race = db.relationship('Races', back_populates='registrations')
+
+    def __repr__(self):
+        return f'<ID: {self.id}, Bike: {self.bike}>' 
