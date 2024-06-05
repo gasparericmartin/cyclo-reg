@@ -1,15 +1,13 @@
 #!/usr/bin/env python3
 
 # Standard library imports
-
-# Remote library imports
+from models import Cyclist, Race, Registration
 from flask import request
 from flask_restful import Resource
-
-# Local imports
 from config import app, db, api
+from flask import Flask, make_response, jsonify, request
+import os
 # Add your model imports
-
 
 # Views go here!
 
