@@ -17,37 +17,92 @@ class Home(Resource):
 
 class Races(Resource):
     def get(self):
-        pass
+        races = Race.query.all()
+        races_dict = [race.to_dict(rules=('-registrations',)) for race in races]
+        return races_dict, 200
 
     def post(self):
-        pass
+        new_race = Race(
+            name = request.json['name'],
+            location = request.json['location'],
+            length = request.json['length'],
+            registration_fee = request.json['registration_fee']
+        )
+
+        db.session.add(new_race)
+        db.session.commit()
+
+        new_race_dict = new_race.to_dict()
+
+        return new_race_dict, 202
 
 class RacesById(Resource):
     def get(self, id):
-        pass
+        race = Race.query.filter_by(id=id).first()
+        
+        return race.to_dict(), 200
 
     def patch(self, id):
-        pass
+        race = Race.query.filter_by(id=id).first()
+        for attr in request.json:
+            setattr(race, attr, request.json[attr])
+        
+        db.session.add(race)
+        db.session.commit()
+
+        return race.to_dict(), 202
 
     def delete(self, id):
-        pass
+        race = Race.query.filter_by(id=id).first()
+
+        db.session.delete(race)
+        db.session.commit()
+
+        return [], 201
 
 class Cyclists(Resource):
     def get(self):
-        pass
+        cyclists = Cyclist.query.all()
+        cyclists_dict = [cyclist.to_dict() for cyclist in cyclists]
+
+        return cyclists_dict, 200
 
     def post(self):
-        pass
+        cyclist = Cyclist(
+                    name = request.json['name'],
+                    age = request.json['age'],
+                    hometown = request.json['hometown']
+        )
+
+        db.session.add(cyclist)
+        db.session.commit()
+
+        return cyclist.to_dict(), 202
 
 class CyclistsById(Resource):
     def get(self, id):
-        pass
+        cyclist = Cyclist.query.filter_by(id=id).first()
+
+        return cyclist.to_dict(), 200
 
     def patch(self, id):
-        pass
+        cyclist = Cyclist.query.filter_by(id=id).first()
+
+        for attr in request.json:
+            setattr(cyclist, attr, request.json[attr])
+        
+        db.session.add(cyclist)
+        db.session.commit()
+
+        return cyclist.to_dict(), 202
 
     def delete(self, id):
-        pass
+        cyclist = Cyclist.query.filter_by(id=id).first()
+        
+        db.session.delete(cyclist)
+        db.session.commit()
+
+        return [], 201
 
 class Signups(Resource):
     def get(self):
