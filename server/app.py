@@ -23,8 +23,7 @@ class Races(Resource):
             races_dict = [race.to_dict(rules=('-registrations',)) for race in races]
             return races_dict, 200
         
-        else:
-            return {'error': '404 no content'}, 404
+        return {'error': '404 not found'}, 404
 
     def post(self):
         try:
@@ -52,7 +51,7 @@ class RacesById(Resource):
         if race:
             return race.to_dict(), 200
         
-        return {'error': '404 no content'}, 404
+        return {'error': '404 not found'}, 404
 
     def patch(self, id):
         race = Race.query.filter_by(id=id).first()
