@@ -104,7 +104,7 @@ class CyclistsById(Resource):
 
         return [], 201
 
-class Signups(Resource):
+class Registrations(Resource):
     def get(self):
         pass
 
@@ -118,7 +118,7 @@ api.add_resource(Races, '/races')
 api.add_resource(RacesById, '/races/<int:id>')
 api.add_resource(Cyclists, '/cyclists')
 api.add_resource(CyclistsById, '/cyclists/<int:id>')
-api.add_resource(Signups, '/signups')
+api.add_resource(Registrations, '/registrations')
 
 
 
