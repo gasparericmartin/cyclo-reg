@@ -106,10 +106,31 @@ class CyclistsById(Resource):
 
 class Registrations(Resource):
     def get(self):
-        pass
+        registrations = Registration.query.all()
+        reg_dict = [reg.to_dict() for reg in registrations]
+
+        return reg_dict, 200
 
     def post(self):
-        pass
+        new_reg = Registration(
+                    bike = request.json['bike'],
+                    cyclist_id = request.json['cyclist_id'],
+                    race_id = request.json['race_id']
+        )
+
+        db.session.add(new_reg)
+        db.session.commit()
+
+        return new_reg.to_dict(), 202
+
+class RegistrationsById(Resource):
+    def delete(self, id):
+        registration = Registration.query.filter_by(id=id).first()
+
+        db.session.delete(registration)
+        db.session.commit()
+
+        return [], 202
 
 
 
@@ -119,6 +140,7 @@ api.add_resource(RacesById, '/races/<int:id>')
 api.add_resource(Cyclists, '/cyclists')
 api.add_resource(CyclistsById, '/cyclists/<int:id>')
 api.add_resource(Registrations, '/registrations')
+api.add_resource(RegistrationsById, '/registrations/<int:id>')
 
 
 
