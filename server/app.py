@@ -34,7 +34,7 @@ class Races(Resource):
 
         new_race_dict = new_race.to_dict()
 
-        return new_race_dict, 202
+        return new_race_dict, 201
 
 class RacesById(Resource):
     def get(self, id):
@@ -58,7 +58,7 @@ class RacesById(Resource):
         db.session.delete(race)
         db.session.commit()
 
-        return [], 201
+        return [], 204
 
 class Cyclists(Resource):
     def get(self):
@@ -77,7 +77,7 @@ class Cyclists(Resource):
         db.session.add(cyclist)
         db.session.commit()
 
-        return cyclist.to_dict(), 202
+        return cyclist.to_dict(), 201
 
 class CyclistsById(Resource):
     def get(self, id):
@@ -102,7 +102,7 @@ class CyclistsById(Resource):
         db.session.delete(cyclist)
         db.session.commit()
 
-        return [], 201
+        return [], 204
 
 class Registrations(Resource):
     def get(self):
@@ -121,7 +121,7 @@ class Registrations(Resource):
         db.session.add(new_reg)
         db.session.commit()
 
-        return new_reg.to_dict(), 202
+        return new_reg.to_dict(), 201
 
 class RegistrationsById(Resource):
     def delete(self, id):
@@ -130,7 +130,7 @@ class RegistrationsById(Resource):
         db.session.delete(registration)
         db.session.commit()
 
-        return [], 202
+        return [], 204
 
 
 
