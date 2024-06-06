@@ -89,46 +89,74 @@ class RacesById(Resource):
 class Cyclists(Resource):
     def get(self):
         cyclists = Cyclist.query.all()
-        cyclists_dict = [cyclist.to_dict() for cyclist in cyclists]
 
-        return cyclists_dict, 200
+        if cyclists:
+            cyclists_dict = [cyclist.to_dict() for cyclist in cyclists]
+
+            return cyclists_dict, 200
+        
+        return {'error': '404 not found'}, 404
 
     def post(self):
-        cyclist = Cyclist(
-                    name = request.json['name'],
-                    age = request.json['age'],
-                    hometown = request.json['hometown']
-        )
+        try:
+            cyclist = Cyclist(
+                        name = request.json['name'],
+                        age = request.json['age'],
+                        hometown = request.json['hometown']
+            )
 
-        db.session.add(cyclist)
-        db.session.commit()
+            db.session.add(cyclist)
+            db.session.commit()
 
-        return cyclist.to_dict(), 201
+            return cyclist.to_dict(), 201
+        
+        except Exception as exc:
+            return {'error': f'{exc}'}, 400
 
 class CyclistsById(Resource):
     def get(self, id):
         cyclist = Cyclist.query.filter_by(id=id).first()
 
-        return cyclist.to_dict(), 200
+        if cyclist:
+            return cyclist.to_dict(), 200
+        
+        return {'error': '404 not found'}, 404
 
     def patch(self, id):
         cyclist = Cyclist.query.filter_by(id=id).first()
 
-        for attr in request.json:
-            setattr(cyclist, attr, request.json[attr])
-        
-        db.session.add(cyclist)
-        db.session.commit()
+        if cyclist:
+            try:
 
-        return cyclist.to_dict(), 202
+                for attr in request.json:
+                    setattr(cyclist, attr, request.json[attr])
+                
+                db.session.add(cyclist)
+                db.session.commit()
+
+                return cyclist.to_dict(), 202
+            
+            except Exception as exc:
+                return {'error': f'{exc}'}, 400
+        
+        return {'error': '404 not found'}, 404
 
     def delete(self, id):
         cyclist = Cyclist.query.filter_by(id=id).first()
         
-        db.session.delete(cyclist)
-        db.session.commit()
+        if cyclist:
+            try:
+                db.session.delete(cyclist)
+                db.session.commit()
 
-        return [], 204
+                return {}, 204
+            
+            except Exception as exc:
+                return {'error': f'{exc}'}
+        
+        return {'error': '404 not found'}, 404
+        
+
 
 class Registrations(Resource):
     def get(self):
