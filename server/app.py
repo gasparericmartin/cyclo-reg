@@ -18,47 +18,73 @@ class Home(Resource):
 class Races(Resource):
     def get(self):
         races = Race.query.all()
-        races_dict = [race.to_dict(rules=('-registrations',)) for race in races]
-        return races_dict, 200
+
+        if races:
+            races_dict = [race.to_dict(rules=('-registrations',)) for race in races]
+            return races_dict, 200
+        
+        else:
+            return {'error': '404 no content'}, 404
 
     def post(self):
-        new_race = Race(
-            name = request.json['name'],
-            location = request.json['location'],
-            length = request.json['length'],
-            registration_fee = request.json['registration_fee']
-        )
+        try:
+            new_race = Race(
+                name = request.json['name'],
+                location = request.json['location'],
+                length = request.json['length'],
+                registration_fee = request.json['registration_fee']
+            )
 
-        db.session.add(new_race)
-        db.session.commit()
+            db.session.add(new_race)
+            db.session.commit()
 
-        new_race_dict = new_race.to_dict()
+            new_race_dict = new_race.to_dict()
 
-        return new_race_dict, 201
+            return new_race_dict, 201
+        
+        except Exception as exc:
+            return {'error': f'{exc}'}, 400
 
 class RacesById(Resource):
     def get(self, id):
         race = Race.query.filter_by(id=id).first()
         
-        return race.to_dict(), 200
+        if race:
+            return race.to_dict(), 200
+        
+        return {'error': '404 no content'}, 404
 
     def patch(self, id):
         race = Race.query.filter_by(id=id).first()
-        for attr in request.json:
-            setattr(race, attr, request.json[attr])
-        
-        db.session.add(race)
-        db.session.commit()
 
-        return race.to_dict(), 202
+        if race:
+            try:
+                for attr in request.json:
+                    setattr(race, attr, request.json[attr])
+                
+                db.session.add(race)
+                db.session.commit()
+
+                return race.to_dict(), 202
+            
+            except Exception as exc:
+                return {'error': f'{exc}'}, 400
+        
+        return {'error': '404 not found'}, 404
 
     def delete(self, id):
         race = Race.query.filter_by(id=id).first()
+        if race:
+            try:
+                db.session.delete(race)
+                db.session.commit()
 
-        db.session.delete(race)
-        db.session.commit()
-
-        return [], 204
+                return [], 204
+            
+            except Exception as exc:
+                return {'error', f'{exc}'}, 400
+        
+        return {'error', '404 not found'}, 404
 
 class Cyclists(Resource):
     def get(self):
