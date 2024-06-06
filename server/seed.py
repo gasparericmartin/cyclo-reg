@@ -2,6 +2,7 @@
 
 # Standard library imports
 from random import randint, choice as rc
+import datetime
 
 # Remote library imports
 from faker import Faker
@@ -38,12 +39,14 @@ if __name__ == '__main__':
 
         race_1 = Race(
                     name = 'Badlands 500',
+                    date = datetime.datetime.now(),
                     location = 'Arizona',
                     length = 36,
                     registration_fee = 100.0
         )    
         race_2 = Race(
                     name = 'Nutmeg',
+                    date = datetime.datetime.now(),
                     location = 'New Haven, CT',
                     length = 20.0,
                     registration_fee = 200.0

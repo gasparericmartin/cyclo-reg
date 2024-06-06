@@ -39,6 +39,7 @@ class Race(db.Model, SerializerMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
+    date = db.Column(db.DateTime)
     location = db.Column(db.String)
     length = db.Column(db.Float)
     registration_fee = db.Column(db.Float)
