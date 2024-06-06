@@ -38,7 +38,7 @@ class Race(db.Model, SerializerMixin):
     serialize_rules = ('-registrations.race', '-cyclists.races')
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(20))
+    name = db.Column(db.String)
     location = db.Column(db.String)
     length = db.Column(db.Float)
     registration_fee = db.Column(db.Float)
