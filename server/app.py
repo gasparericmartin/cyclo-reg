@@ -161,30 +161,45 @@ class CyclistsById(Resource):
 class Registrations(Resource):
     def get(self):
         registrations = Registration.query.all()
-        reg_dict = [reg.to_dict() for reg in registrations]
 
-        return reg_dict, 200
+        if registrations:
+            reg_dict = [reg.to_dict() for reg in registrations]
+
+            return reg_dict, 200
+        
+        return {'error': '404 not found'}, 404
 
     def post(self):
-        new_reg = Registration(
-                    bike = request.json['bike'],
-                    cyclist_id = request.json['cyclist_id'],
-                    race_id = request.json['race_id']
-        )
+        try:
+            new_reg = Registration(
+                        bike = request.json['bike'],
+                        cyclist_id = request.json['cyclist_id'],
+                        race_id = request.json['race_id']
+            )
 
-        db.session.add(new_reg)
-        db.session.commit()
+            db.session.add(new_reg)
+            db.session.commit()
 
-        return new_reg.to_dict(), 201
+            return new_reg.to_dict(), 201
+        
+        except Exception as exc:
+            return {'error': f'{exc}'}
 
 class RegistrationsById(Resource):
     def delete(self, id):
         registration = Registration.query.filter_by(id=id).first()
 
-        db.session.delete(registration)
-        db.session.commit()
+        if registration:
+            try:
+                db.session.delete(registration)
+                db.session.commit()
 
-        return [], 204
+                return [], 204
+            
+            except Exception as exc:
+                return {'error': f'{exc}'}, 400
+        
+        return {'error': '404 not found'}, 404
 
 
 
