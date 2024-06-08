@@ -20,7 +20,7 @@ class Races(Resource):
         races = Race.query.all()
 
         if races:
-            races_dict = [race.to_dict(rules=('-registrations',)) for race in races]
+            races_dict = [race.to_dict() for race in races]
             return races_dict, 200
         
         return {'error': '404 not found'}, 404
