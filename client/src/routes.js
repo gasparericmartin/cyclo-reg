@@ -1,4 +1,7 @@
-import App from components/App
+import App from './components/App'
+import Home from './pages/Home'
+import Cyclists from './pages/Cyclists'
+import Races from './pages/Races'
 
 const routes = [
     {
