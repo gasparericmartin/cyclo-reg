@@ -29,6 +29,7 @@ class Races(Resource):
         try:
             new_race = Race(
                 name = request.json['name'],
+                date = request.json['date'],
                 location = request.json['location'],
                 length = request.json['length'],
                 registration_fee = request.json['registration_fee']
