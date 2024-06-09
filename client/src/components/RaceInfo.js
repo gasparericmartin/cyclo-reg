@@ -18,13 +18,17 @@ function RaceInfo({race}) {
             <p>{location}</p>
             <p>{length}</p>
             <p>${registration_fee}</p>
+
+            <button>Delete Race</button>
+
+            <h1>Registrations</h1>
     
             {registrations.map((registration) => {
                 return (
-                    <>
+                    <div key={registration.id}>
                         <h2>{registration.cyclist.name}</h2>
                         <p>{registration.bike}</p>
-                    </>
+                    </div>
                 )
                     
 

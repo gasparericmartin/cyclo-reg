@@ -18,10 +18,12 @@ function AddRaceForm({postRace}) {
     function handleSubmit(e) {
         e.preventDefault()
 
+        const postDate = formData.date.split('-').map((element) => parseInt(element))
+
         const postObj = {
                         id: '',
                         name: formData.name,
-                        date: formData.date,
+                        date: postDate,
                         location: formData.location,
                         length: formData.length,
                         registration_fee: formData.registration_fee
@@ -34,7 +36,7 @@ function AddRaceForm({postRace}) {
     return (
         <>
             <form onSubmit={handleSubmit}>
-                <Input 
+                <input 
                     type='text'
                     placeholder='Name'
                     value={formData.name}
@@ -42,7 +44,7 @@ function AddRaceForm({postRace}) {
                     onChange={handleChange}
                 />
 
-                <Input 
+                <input 
                     type='date'
                     placeholder='Date'
                     value={formData.date}
@@ -50,7 +52,7 @@ function AddRaceForm({postRace}) {
                     onChange={handleChange}
                 />
 
-                <Input 
+                <input 
                     type='text'
                     placeholder='Location'
                     value={formData.location}
@@ -58,7 +60,7 @@ function AddRaceForm({postRace}) {
                     onChange={handleChange}
                 />
 
-                <Input 
+                <input 
                     type='number'
                     placeholder='Length'
                     value={formData.length}
@@ -66,13 +68,15 @@ function AddRaceForm({postRace}) {
                     onChange={handleChange}
                 />
 
-                <Input 
+                <input 
                     type='number'
                     placeholder='Registration Fee'
                     value={formData.registration_fee}
                     name='registration_fee'
                     onChange={handleChange}
                 />
+
+                <input type='submit' />
             </form>
         </>
     )
