@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react'
-import Cyclists from '../components/CyclistCard'
+import CyclistCard from '../components/CyclistCard'
 
 
 function Cyclists() {
@@ -10,11 +10,6 @@ function Cyclists() {
         .then(r => r.json())
         .then(data => setCyclists(data))
     }, [])
-
-
-
-
-
 
     return (
         <>

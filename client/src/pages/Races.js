@@ -43,7 +43,6 @@ function Races() {
         })
         .then(r => r.json())
         .then(data => setRaces([...races, data]))
-        console.log(postObj)
     }
 
     function switchRender() {

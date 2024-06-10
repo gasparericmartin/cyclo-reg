@@ -1,84 +1,82 @@
-import {useState} from 'react'
+import {Formik, Form, Field, ErrorMessage} from 'formik'
+import * as Yup from 'yup'
 
 function AddRaceForm({postRace}) {
 
+    function handleSubmit(values) {
 
-    const [formData, setFormData] = useState({
-                                        name: '',
-                                        date: '',
-                                        location: '',
-                                        length: '',
-                                        registration_fee: ''
-                                        })
-
-    function handleChange(e) {
-        setFormData({...formData, [e.target.name]: e.target.value})
-    }
-
-    function handleSubmit(e) {
-        e.preventDefault()
-
-        const postDate = formData.date.split('-').map((element) => parseInt(element))
+        const postDate = values.date.split('-').map((element) => parseInt(element))
 
         const postObj = {
                         id: '',
-                        name: formData.name,
+                        name: values.name,
                         date: postDate,
-                        location: formData.location,
-                        length: formData.length,
-                        registration_fee: formData.registration_fee
+                        location: values.location,
+                        length: values.length,
+                        registration_fee: values.registration_fee
         }
 
         postRace(postObj)
     }
 
+    return(
 
-    return (
-        <>
-            <form onSubmit={handleSubmit}>
-                <input 
-                    type='text'
-                    placeholder='Name'
-                    value={formData.name}
-                    name='name'
-                    onChange={handleChange}
-                />
+        <Formik
+            validateOnChange={false}
+            validateOnBlur={false}
+            initialValues={{
+                name: '',
+                date: '',
+                location: '',
+                length: '',
+                registration_fee: ''
+            }}
+            validationSchema={Yup.object().shape({
+                name: Yup.string()
+                    .max(30, 'Must be 30 characters or less')
+                    .required('Required'),
+                date: Yup.date()
+                    .required('Required'),
+                location: Yup.string()
+                    .max(30, 'Must be 30 characters or less')
+                    .required('Required'),
+                length: Yup.number()
+                    .min(1, 'Must be at least 1 mile')
+                    .max(1000, 'Cannot be more than 1000 miles')
+                    .required('Required'),
+                registration_fee: Yup.number()
+                    .max(100, 'Events should not be more than $100')
+                    .required('Required')
+            })}
+            onSubmit={(values, props, initialValues) => {
+                handleSubmit(values)
+                props.resetForm(initialValues)
+            }}
+        >
+            <Form>
+                <label htmlFor='name'>Name</label>
+                <Field name='name' type='text' />
+                <ErrorMessage name='name' />
 
-                <input 
-                    type='date'
-                    placeholder='Date'
-                    value={formData.date}
-                    name='date'
-                    onChange={handleChange}
-                />
+                <label htmlFor='date'>Date</label>
+                <Field name='date' type='date' />
+                <ErrorMessage name='date' />
 
-                <input 
-                    type='text'
-                    placeholder='Location'
-                    value={formData.location}
-                    name='location'
-                    onChange={handleChange}
-                />
+                <label htmlFor='location'>Location</label>
+                <Field name='location' type='text' />
+                <ErrorMessage name='location' />
 
-                <input 
-                    type='number'
-                    placeholder='Length'
-                    value={formData.length}
-                    name='length'
-                    onChange={handleChange}
-                />
+                <label htmlFor='length'>Length</label>
+                <Field name='length' type='number' />
+                <ErrorMessage name='length' />
 
-                <input 
-                    type='number'
-                    placeholder='Registration Fee'
-                    value={formData.registration_fee}
-                    name='registration_fee'
-                    onChange={handleChange}
-                />
+                <label htmlFor='registration_fee'>Registration Fee</label>
+                <Field name='registration_fee' type='number' />
+                <ErrorMessage name='registraion_fee' />
 
-                <input type='submit' />
-            </form>
-        </>
+                <button type='submit'>Submit</button>
+            </Form>
+        </Formik>
     )
 }
 
