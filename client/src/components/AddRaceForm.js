@@ -1,4 +1,4 @@
-import {Formik, Form, Field, ErrorMessage} from 'formik'
+import {Formik, Form, Field} from 'formik'
 import * as Yup from 'yup'
 
 function AddRaceForm({postRace}) {
@@ -53,29 +53,33 @@ function AddRaceForm({postRace}) {
                 props.resetForm(initialValues)
             }}
         >
+            {({errors}) => (
             <Form>
                 <label htmlFor='name'>Name</label>
                 <Field name='name' type='text' />
-                <ErrorMessage name='name' />
+                {errors.name ? <p>{errors.name}</p>: null}
 
                 <label htmlFor='date'>Date</label>
                 <Field name='date' type='date' />
-                <ErrorMessage name='date' />
+                {errors.date ? <p>{errors.date}</p>: null}
 
                 <label htmlFor='location'>Location</label>
                 <Field name='location' type='text' />
-                <ErrorMessage name='location' />
+                {errors.location ? <p>{errors.location}</p>: null}
 
                 <label htmlFor='length'>Length</label>
                 <Field name='length' type='number' />
-                <ErrorMessage name='length' />
+                {errors.length ? <p>{errors.length}</p>: null}
 
                 <label htmlFor='registration_fee'>Registration Fee</label>
                 <Field name='registration_fee' type='number' />
-                <ErrorMessage name='registraion_fee' />
-
+                {errors.registration_fee ? <p>{errors.registration_fee}</p> : null}
+                
                 <button type='submit'>Submit</button>
             </Form>
+
+            )}
+            
         </Formik>
     )
 }

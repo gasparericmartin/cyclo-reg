@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react'
+import {useState, useEffect, forceUpdate} from 'react'
 import RaceCard from '../components/RaceCard'
 import RaceInfo from '../components/RaceInfo'
 import AddRaceForm from '../components/AddRaceForm'
@@ -45,6 +45,34 @@ function Races() {
         .then(data => setRaces([...races, data]))
     }
 
+    function patchRace(postObj, race) {
+        fetch(`http://localhost:5555/races/${race.id}`, {
+            method: 'PATCH',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(postObj)
+        })
+        .then(r => {
+            if (r.ok) {
+
+                r.json().then((newRace) => {
+                    setRaces(races.map((race) => {
+                        if (race.id !== newRace.id) {
+                            return race
+                        }
+                        else {
+                            return newRace
+                        }
+                    
+                    }))
+                    setRaceDetails(newRace)
+        
+                })
+            }
+        })
+    }
+
     function switchRender() {
         if (!showRaceDetails) {
             return (
@@ -53,12 +81,17 @@ function Races() {
                             key={race.id} 
                             race={race} 
                             handleRegClick={handleRegClick} 
-                            handleDeleteRace={handleDeleteRace}/>
+                            handleDeleteRace={handleDeleteRace}
+                            patchRace={patchRace}/>
                 })
             )
         }
         else {
-            return <RaceInfo race={raceDetails}/>
+            return <RaceInfo race={raceDetails} 
+                                del={handleDeleteRace}
+                                show={showRaceDetails}
+                                setShow={setShowRaceDetails}
+                                patchRace={patchRace}/>
         }
     }
     

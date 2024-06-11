@@ -1,6 +1,7 @@
+import {useState} from 'react'
+import UpdateRaceForm from './UpdateRaceForm'
 
-
-function RaceInfo({race}) {
+function RaceInfo({race, del, show, setShow, patchRace}) {
     const {
         id,
         name,
@@ -10,6 +11,8 @@ function RaceInfo({race}) {
         registration_fee,
         registrations
         } = race   
+    
+    const [update, setUpdate] = useState(false)
 
     return (
         <>
@@ -19,7 +22,15 @@ function RaceInfo({race}) {
             <p>{length}</p>
             <p>${registration_fee}</p>
 
-            <button>Delete Race</button>
+            <button onClick={() => setUpdate(!update)}>Update Race</button>
+            <button onClick={() => {
+                                del(race)
+                                setShow(!show)}
+                            }>Delete Race</button>
+            
+            {update ? 
+            <UpdateRaceForm race={race} patchRace={patchRace}/> : 
+            null}
 
             <h1>Registrations</h1>
     
@@ -30,8 +41,6 @@ function RaceInfo({race}) {
                         <p>{registration.bike}</p>
                     </div>
                 )
-                    
-
             })}
         </>
     )
