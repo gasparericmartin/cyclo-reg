@@ -10,6 +10,7 @@ function App() {
     .then(r => r.json())
     .then(data => setRaces(data))
   }, [])
+
   
   return (
     <>

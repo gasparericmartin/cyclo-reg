@@ -8,15 +8,6 @@ function CyclistCard({cyclist, races}) {
     const [newReg, setNewReg] = useState(false)
     const [regList, setRegList] = useState([...registrations])
 
-    // function RegCard(registration) {
-    //     return (
-    //         <div key={registration.id}>
-    //             <h2>{registration.race.name}</h2>
-    //             <p>{registration.bike}</p>
-    //         </div>
-    //     )
-    // }
-
     return (
         <>
         <h2>{name}</h2>

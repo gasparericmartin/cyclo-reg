@@ -1,5 +1,6 @@
 import {useState} from 'react'
 import UpdateRaceForm from './UpdateRaceForm'
+import RegCard from './RegCard'
 
 function RaceInfo({race, del, show, setShow, patchRace}) {
     const {
@@ -11,6 +12,7 @@ function RaceInfo({race, del, show, setShow, patchRace}) {
         registration_fee,
         registrations
         } = race   
+    const [regList, setRegList] = useState([...registrations])
     
     const [update, setUpdate] = useState(false)
 
@@ -34,14 +36,11 @@ function RaceInfo({race, del, show, setShow, patchRace}) {
 
             <h1>Registrations</h1>
     
-            {registrations.map((registration) => {
-                return (
-                    <div key={registration.id}>
-                        <h2>{registration.cyclist.name}</h2>
-                        <p>{registration.bike}</p>
-                    </div>
-                )
-            })}
+            {regList.map((registration) => <RegCard 
+                                                key={registration.id}
+                                                registration={registration}
+                                                regList={regList}
+                                                setRegList={setRegList}/>)}
         </>
     )
 
