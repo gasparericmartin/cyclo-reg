@@ -1,9 +1,11 @@
 import {useState} from 'react'
+import RegistrationForm from './RegistrationForm'
 
-function CyclistCard({cyclist}) {
+function CyclistCard({cyclist, races}) {
     const {id, name, age, hometown, registrations} = cyclist
     const [showReg, setShowReg] = useState(false)
     const [newReg, setNewReg] = useState(false)
+    const [regList, setRegList] = useState([...registrations])
 
     function regCard(registration) {
         return (
@@ -20,8 +22,15 @@ function CyclistCard({cyclist}) {
         <p>{age}</p>
         <p>{hometown}</p>
         <button onClick={() => setShowReg(!showReg)}>Show Registrations</button>
+        <button onClick={() => setNewReg(!newReg)}>New Registration</button>
 
-        {showReg ? registrations.map((registration) => regCard(registration)): null}
+        {newReg ? <RegistrationForm 
+                    races={races} 
+                    cyclist={cyclist}
+                    regList={regList}
+                    setRegList={setRegList}/> : null}
+
+        {showReg ? regList.map((registration) => regCard(registration)): null}
         </>
     )
 }

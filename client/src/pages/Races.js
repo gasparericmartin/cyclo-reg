@@ -6,17 +6,10 @@ import AddRaceForm from '../components/AddRaceForm'
 
 
 function Races() {
-    // const [races, setRaces] = useState([])
     const {races, setRaces} = useOutletContext()
     const [showRaceDetails, setShowRaceDetails] = useState(false)
     const [showForm, setShowForm] = useState(false)
     const [raceDetails, setRaceDetails] = useState([])
-    
-    // useEffect(() => {
-    //     fetch('http://localhost:5555/races')
-    //     .then(r => r.json())
-    //     .then(data => setRaces(data))
-    // }, [])
 
     function handleRegClick(race) {
         setShowRaceDetails(!showRaceDetails)
