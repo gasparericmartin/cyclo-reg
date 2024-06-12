@@ -1,3 +1,4 @@
+from sqlalchemy import UniqueConstraint
 from sqlalchemy.orm import validates
 from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy_serializer import SerializerMixin
@@ -17,7 +18,7 @@ class Cyclist(db.Model, SerializerMixin):
     serialize_rules = ('-registrations.cyclist', '-races.cyclsits')
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String)
+    name = db.Column(db.String, nullable=False)
     age = db.Column(db.Integer)
     hometown = db.Column(db.String)
 
@@ -38,10 +39,10 @@ class Race(db.Model, SerializerMixin):
     serialize_rules = ('-registrations.race', '-cyclists.races')
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String)
-    date = db.Column(db.DateTime)
-    location = db.Column(db.String)
-    length = db.Column(db.Float)
+    name = db.Column(db.String, nullable=False)
+    date = db.Column(db.DateTime, nullable=False)
+    location = db.Column(db.String, nullable=False)
+    length = db.Column(db.Float, nullable=False)
     registration_fee = db.Column(db.Float)
 
     registrations = db.relationship('Registration',
@@ -58,13 +59,15 @@ class Race(db.Model, SerializerMixin):
 class Registration(db.Model, SerializerMixin):
     __tablename__ = 'registrations'
 
+    __tableargs__ = (db.UniqueConstraint('cyclist_id', 'race_id', name='_reg_uc'),)
+
     serialize_rules = ('-cyclist.registrations', '-race.registrations')
     
     id = db.Column(db.Integer, primary_key=True)
-    bike = db.Column(db.String)
+    bike = db.Column(db.String, nullable=False)
     
-    cyclist_id = db.Column(db.Integer, db.ForeignKey('cyclists.id'))
-    race_id = db.Column(db.Integer, db.ForeignKey('races.id'))   
+    cyclist_id = db.Column(db.Integer, db.ForeignKey('cyclists.id'), nullable=False)
+    race_id = db.Column(db.Integer, db.ForeignKey('races.id'), nullable =False)   
 
     cyclist = db.relationship('Cyclist', back_populates='registrations')
     race = db.relationship('Race', back_populates='registrations')
