@@ -3,10 +3,11 @@ import { useOutletContext } from 'react-router-dom'
 import RaceCard from '../components/RaceCard'
 import RaceInfo from '../components/RaceInfo'
 import AddRaceForm from '../components/AddRaceForm'
+import '../index.css'
 
 
 function Races() {
-    const {races, setRaces} = useOutletContext()
+    const {races, setRaces, regs, setRegs} = useOutletContext()
     const [showRaceDetails, setShowRaceDetails] = useState(false)
     const [showForm, setShowForm] = useState(false)
     const [raceDetails, setRaceDetails] = useState([])
@@ -62,6 +63,18 @@ function Races() {
                     
                     }))
                     setRaceDetails(newRace)
+                    setRegs(() =>
+                        regs.map((reg) => {
+                            if (reg.race_id !== newRace.id) {
+                                return reg
+                            }
+                            else {
+                                const {registrations, ...modRace} = newRace
+                                return {...reg, race:modRace}
+                            }
+                        })
+
+                    )
         
                 })
             }
@@ -91,7 +104,7 @@ function Races() {
     }
     
     return (
-        <>
+        <div className='container'>
             <h1>Races</h1>
             <button onClick={() => setShowForm(!showForm)}>Create Race</button>
             {showForm ? <AddRaceForm postRace={postRace}/> : null}
@@ -99,7 +112,7 @@ function Races() {
             <button onClick={() => setShowRaceDetails(!showRaceDetails)}>Show All Races</button>:
             null}
             {switchRender()}
-        </>
+        </div>
     )
 }
 
