@@ -1,7 +1,10 @@
+import { useOutletContext } from 'react-router-dom'
 import {Formik, Form, Field} from 'formik'
 import * as Yup from 'yup'
 
-function RegistrationForm({races, cyclist, regList, setRegList}) {
+function RegistrationForm({races, cyclist}) {
+
+    const {regs, setRegs} = useOutletContext()
 
     function handleSubmit(values) {
         const postObj = {
@@ -19,7 +22,7 @@ function RegistrationForm({races, cyclist, regList, setRegList}) {
         })
         .then(r => {
             if(r.ok) {
-               r.json().then((newReg) => setRegList([...regList, newReg]))
+               r.json().then((newReg) => setRegs([...regs, newReg]))
             }
         })
 

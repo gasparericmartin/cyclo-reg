@@ -1,22 +1,25 @@
+import { useOutletContext } from "react-router-dom"
 
+function RegCard({registration, cyclist}) {
+    const {regs, setRegs} = useOutletContext()
 
-function RegCard({registration, regList, setRegList}) {
     function handleDelete() {
         fetch(`http://localhost:5555/registrations/${registration.id}`, {
             method: 'DELETE'
         })
         .then(r => {
             if(r.ok) {
-                setRegList(regList.filter((reg) => reg.id !== registration.id))
+                setRegs(regs.filter((reg) => reg.id !== registration.id))
             }
         })
     }
     
 
-    if (registration.cyclist) {
+
+    if (cyclist) {
         return (
             <>
-                <h2>{registration.cyclist.name}</h2>
+                <h2>{registration.race.name}</h2>
                 <p>{registration.bike}</p>
                 <button onClick={handleDelete}>Delete</button>
             </>
@@ -25,8 +28,9 @@ function RegCard({registration, regList, setRegList}) {
     else {
         return (
             <>
-                <h2>{registration.race.name}</h2>
+                <h2>{registration.cyclist.name}</h2>
                 <p>{registration.bike}</p>
+                <button onClick={handleDelete}>Delete</button>
             </>
         )
     }

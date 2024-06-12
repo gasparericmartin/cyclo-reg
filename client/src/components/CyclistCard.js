@@ -1,12 +1,14 @@
 import {useState} from 'react'
 import RegistrationForm from './RegistrationForm'
 import RegCard from './RegCard'
+import { useOutletContext } from 'react-router-dom'
 
 function CyclistCard({cyclist, races}) {
     const {id, name, age, hometown, registrations} = cyclist
     const [showReg, setShowReg] = useState(false)
     const [newReg, setNewReg] = useState(false)
-    const [regList, setRegList] = useState([...registrations])
+    const {regs, setRegs} = useOutletContext()
+    const regList = regs.filter((reg) => reg.cyclist_id === cyclist.id)
 
     return (
         <>
@@ -18,15 +20,13 @@ function CyclistCard({cyclist, races}) {
 
         {newReg ? <RegistrationForm 
                     races={races} 
-                    cyclist={cyclist}
-                    regList={regList}
-                    setRegList={setRegList}/> : null}
+                    cyclist={cyclist}/> : null}
 
         {showReg ? regList.map((registration) => <RegCard 
                                                     registration={registration}
                                                     key={registration.id}
                                                     regList={regList}
-                                                    setRegList={setRegList}/>): null}
+                                                    cyclist={cyclist}/>): null}
         </>
     )
 }

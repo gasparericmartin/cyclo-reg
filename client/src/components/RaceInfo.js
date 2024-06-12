@@ -1,4 +1,5 @@
 import {useState} from 'react'
+import { useOutletContext } from 'react-router-dom'
 import UpdateRaceForm from './UpdateRaceForm'
 import RegCard from './RegCard'
 
@@ -12,7 +13,9 @@ function RaceInfo({race, del, show, setShow, patchRace}) {
         registration_fee,
         registrations
         } = race   
-    const [regList, setRegList] = useState([...registrations])
+    // const [regList, setRegList] = useState([...registrations])
+    const {regs, setRegs} = useOutletContext()
+    const regList = regs.filter((reg) => reg.race_id === race.id)
     
     const [update, setUpdate] = useState(false)
 
@@ -39,8 +42,7 @@ function RaceInfo({race, del, show, setShow, patchRace}) {
             {regList.map((registration) => <RegCard 
                                                 key={registration.id}
                                                 registration={registration}
-                                                regList={regList}
-                                                setRegList={setRegList}/>)}
+                                                regList={regList}/>)}
         </>
     )
 

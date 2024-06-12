@@ -7,7 +7,7 @@ function RaceCard({race, handleRegClick, handleDeleteRace, patchRace}) {
     const [update, setUpdate] = useState(false)
         
     return (
-        <>
+        <div className='card'>
             <h1>{name}</h1>
             <button onClick={() => handleRegClick(race)}>Details</button>
             <p>{date}</p>
@@ -19,7 +19,7 @@ function RaceCard({race, handleRegClick, handleDeleteRace, patchRace}) {
             {update ? 
             <UpdateRaceForm race={race} patchRace={patchRace}/> : 
             null}
-        </>
+        </div>
     )
 }
 

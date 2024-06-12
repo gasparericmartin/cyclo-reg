@@ -2,10 +2,10 @@ import {NavLink} from 'react-router-dom'
 
 function NavBar() {
     return (
-        <nav>
-            <NavLink to='/'>Home</NavLink>
-            <NavLink to='/races'>Races</NavLink>
-            <NavLink to='/cyclists'>Cyclists</NavLink>
+        <nav className='navbar'>
+            <NavLink className='link' to='/'>Home</NavLink>
+            <NavLink className='link' to='/races'>Races</NavLink>
+            <NavLink className='link' to='/cyclists'>Cyclists</NavLink>
         </nav>
     )
 }
