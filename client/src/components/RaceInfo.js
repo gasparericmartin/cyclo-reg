@@ -13,16 +13,16 @@ function RaceInfo({race, del, show, setShow, patchRace}) {
         registration_fee,
         registrations
         } = race   
-    // const [regList, setRegList] = useState([...registrations])
+
     const {regs, setRegs} = useOutletContext()
     const regList = regs.filter((reg) => reg.race_id === race.id)
-    
     const [update, setUpdate] = useState(false)
+    const jsDate = new Date(date)
 
     return (
         <>
             <h1>{name}</h1>
-            <p>Date: {date}</p>
+            <p>Date: {jsDate.getMonth() + 1}/{jsDate.getDate()}/{jsDate.getFullYear()}</p>
             <p>Location: {location}</p>
             <p>Distance: {length.toFixed(2)} Miles</p>
             <p>Registration Fee: ${registration_fee.toFixed(2)}</p>

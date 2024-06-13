@@ -11,7 +11,7 @@ function RaceCard({race, handleRegClick, handleDeleteRace, patchRace}) {
         <div className='card'>
             <h1>{name}</h1>
             <button onClick={() => handleRegClick(race)}>Details</button>
-            <p>Date: {jsDate.getMonth()}/{jsDate.getDate()}/{jsDate.getFullYear()}</p>
+            <p>Date: {jsDate.getMonth() + 1}/{jsDate.getDate()}/{jsDate.getFullYear()}</p>
             <p>Location: {location}</p>
             <p>Distance: {length.toFixed(2)} Miles</p>
             <p>Registration Fee: ${registration_fee.toFixed(2)}</p>
