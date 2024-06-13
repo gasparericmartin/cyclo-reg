@@ -11,6 +11,7 @@ function Races() {
     const [showRaceDetails, setShowRaceDetails] = useState(false)
     const [showForm, setShowForm] = useState(false)
     const [raceDetails, setRaceDetails] = useState([])
+    const [error, setError] = useState(false)
 
     function handleRegClick(race) {
         setShowRaceDetails(!showRaceDetails)
@@ -26,6 +27,10 @@ function Races() {
                 setRaces((races) => 
                     races.filter((stateRace) => stateRace.id !== race.id))
             }
+            else {
+                r.json()
+                .then((errorObj) => setError(errorObj.error))
+            }
         })
     }
 
@@ -37,8 +42,18 @@ function Races() {
             },
             body: JSON.stringify(postObj)
         })
-        .then(r => r.json())
-        .then(data => setRaces([...races, data]))
+        .then(r => {
+            if (r.ok) {
+                r.json()
+                .then(data => setRaces([...races, data]))
+            }
+            else {
+                r.json()
+                .then((errorObj) => setError(errorObj.error)) 
+            }
+
+        })
+        
     }
 
     function patchRace(postObj, race) {
@@ -78,6 +93,10 @@ function Races() {
         
                 })
             }
+            else {
+                r.json()
+                .then((errorObj) => setError(errorObj.error))
+            }
         })
     }
 
@@ -111,6 +130,7 @@ function Races() {
             {showRaceDetails ? 
             <button onClick={() => setShowRaceDetails(!showRaceDetails)}>Show All Races</button>:
             null}
+            {error ? <h2>{error}</h2> : null}
             {switchRender()}
         </div>
     )

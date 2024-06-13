@@ -22,10 +22,10 @@ function RaceInfo({race, del, show, setShow, patchRace}) {
     return (
         <>
             <h1>{name}</h1>
-            <p>{date}</p>
-            <p>{location}</p>
-            <p>{length}</p>
-            <p>${registration_fee}</p>
+            <p>Date: {date}</p>
+            <p>Location: {location}</p>
+            <p>Distance: {length.toFixed(2)} Miles</p>
+            <p>Registration Fee: ${registration_fee.toFixed(2)}</p>
 
             <button onClick={() => setUpdate(!update)}>Update Race</button>
             <button onClick={() => {

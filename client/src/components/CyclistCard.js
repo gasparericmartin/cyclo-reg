@@ -11,7 +11,7 @@ function CyclistCard({cyclist, races}) {
     const regList = regs.filter((reg) => reg.cyclist_id === cyclist.id)
 
     return (
-        <>
+        <div className='cyclist-card'>
         <h2>{name}</h2>
         <p>{age}</p>
         <p>{hometown}</p>
@@ -27,7 +27,7 @@ function CyclistCard({cyclist, races}) {
                                                     key={registration.id}
                                                     regList={regList}
                                                     cyclist={cyclist}/>): null}
-        </>
+        </div>
     )
 }
 

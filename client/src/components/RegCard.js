@@ -1,7 +1,9 @@
 import { useOutletContext } from "react-router-dom"
+import {useState} from 'react'
 
 function RegCard({registration, cyclist}) {
     const {regs, setRegs} = useOutletContext()
+    const [error, setError] = useState(false)
 
     function handleDelete() {
         fetch(`http://localhost:5555/registrations/${registration.id}`, {
@@ -10,6 +12,9 @@ function RegCard({registration, cyclist}) {
         .then(r => {
             if(r.ok) {
                 setRegs(regs.filter((reg) => reg.id !== registration.id))
+            }
+            else {
+                r.json().then((errorObj) => setError(errorObj.error))
             }
         })
     }
@@ -22,6 +27,7 @@ function RegCard({registration, cyclist}) {
                 <h2>{registration.race.name}</h2>
                 <p>{registration.bike}</p>
                 <button onClick={handleDelete}>Delete</button>
+                {error ? <h2>{error}</h2> : null}
             </>
         )
     }
@@ -31,6 +37,7 @@ function RegCard({registration, cyclist}) {
                 <h2>{registration.cyclist.name}</h2>
                 <p>{registration.bike}</p>
                 <button onClick={handleDelete}>Delete</button>
+                {error ? <h2>{error}</h2> : null}
             </>
         )
     }
