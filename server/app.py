@@ -7,6 +7,7 @@ from flask_restful import Resource
 from config import app, db, api
 from flask import Flask, make_response, jsonify, request
 import os
+import datetime
 # Add your model imports
 
 # Views go here!
@@ -29,7 +30,11 @@ class Races(Resource):
         try:
             new_race = Race(
                 name = request.json['name'],
-                date = request.json['date'],
+                date = datetime.datetime(
+                                    request.json['date'][0],
+                                    request.json['date'][1],
+                                    request.json['date'][2]
+                        ),
                 location = request.json['location'],
                 length = request.json['length'],
                 registration_fee = request.json['registration_fee']
