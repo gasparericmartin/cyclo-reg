@@ -65,7 +65,15 @@ class RacesById(Resource):
         if race:
             try:
                 for attr in request.json:
-                    setattr(race, attr, request.json[attr])
+                    if attr != 'date':
+                        setattr(race, attr, request.json[attr])
+                    else:
+                        date = datetime.datetime(
+                                    request.json['date'][0],
+                                    request.json['date'][1],
+                                    request.json['date'][2]
+                        )
+                        setattr(race, attr, date)
                 
                 db.session.add(race)
                 db.session.commit()
