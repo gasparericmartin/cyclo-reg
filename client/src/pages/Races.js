@@ -7,7 +7,7 @@ import '../index.css'
 
 
 function Races() {
-    const {races, setRaces, regs, setRegs} = useOutletContext()
+    const {races, setRaces, regs, setRegs, setRaceError} = useOutletContext()
     const [showRaceDetails, setShowRaceDetails] = useState(false)
     const [showForm, setShowForm] = useState(false)
     const [raceDetails, setRaceDetails] = useState([])
@@ -26,6 +26,7 @@ function Races() {
             if (r.ok) {
                 setRaces((races) => 
                     races.filter((stateRace) => stateRace.id !== race.id))
+                setError(false)
             }
             else {
                 r.json()
@@ -46,6 +47,8 @@ function Races() {
             if (r.ok) {
                 r.json()
                 .then(data => setRaces([...races, data]))
+                setError(false)
+                setRaceError(false)
             }
             else {
                 r.json()
@@ -90,6 +93,7 @@ function Races() {
                         })
 
                     )
+                    setError(false)
         
                 })
             }

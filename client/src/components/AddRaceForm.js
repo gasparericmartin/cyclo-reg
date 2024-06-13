@@ -19,6 +19,31 @@ function AddRaceForm({postRace}) {
         postRace(postObj)
     }
 
+    function validateName(value) {
+        let error
+        const valueCase = value.toLowerCase()
+        if(!value) {
+            error = 'Required'
+        }
+        else if(
+            !valueCase.includes('race')
+        ) {
+            return 'Must include the word "race"'
+        }
+    }
+
+    function validateLocation(value) {
+        let error
+        const re = /[A-z0-9 ]*[,][ ][A-Z]{2}/
+
+        if(!value) {
+            error = 'Required'
+        }
+        else if(!re.exec(value)) {
+           return 'Location format is "city, state abbr." for example "Troy, NY"'
+        }
+    }
+
     return(
 
         <Formik
@@ -55,8 +80,8 @@ function AddRaceForm({postRace}) {
         >
             {({errors}) => (
             <Form>
-                <label htmlFor='name'>Name</label>
-                <Field name='name' type='text' />
+                <label htmlFor='name' >Name</label>
+                <Field name='name' type='text' validate={validateName}/>
                 {errors.name ? <p>{errors.name}</p>: null}
 
                 <label htmlFor='date'>Date</label>
@@ -64,7 +89,7 @@ function AddRaceForm({postRace}) {
                 {errors.date ? <p>{errors.date}</p>: null}
 
                 <label htmlFor='location'>Location</label>
-                <Field name='location' type='text' />
+                <Field name='location' type='text' validate ={validateLocation}/>
                 {errors.location ? <p>{errors.location}</p>: null}
 
                 <label htmlFor='length'>Length</label>

@@ -14,6 +14,7 @@ function Cyclists() {
             if (r.ok) {
                 r.json()
                 .then(data => setCyclists(data))   
+                setError(false)
             }
             else {
                 r.json()
@@ -25,7 +26,7 @@ function Cyclists() {
     
     }, [])
 
-    if (error) return <h2>{error}</h2>
+    if (error) return <h2>Cyclists Error: {error}</h2>
 
     return (
         <>

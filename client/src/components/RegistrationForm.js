@@ -25,6 +25,7 @@ function RegistrationForm({races, cyclist}) {
         .then(r => {
             if(r.ok) {
                 r.json().then((newReg) => setRegs([...regs, newReg]))
+                setError(false)
             }
             else {
                 r.json().then((errorObj) => setError(errorObj.error))

@@ -12,6 +12,7 @@ function RegCard({registration, cyclist}) {
         .then(r => {
             if(r.ok) {
                 setRegs(regs.filter((reg) => reg.id !== registration.id))
+                setError(false)
             }
             else {
                 r.json().then((errorObj) => setError(errorObj.error))
