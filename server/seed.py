@@ -51,7 +51,7 @@ def create_registrations():
     for x in range(10):
         registration = Registration(
                     bike = rc(bike_brands),
-                    cyclist_id = x,
+                    cyclist_id = x + 1,
                     race_id = randint(1, 10)
         )
         registrations.append(registration)
