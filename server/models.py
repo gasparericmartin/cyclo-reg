@@ -1,4 +1,4 @@
-from sqlalchemy import UniqueConstraint
+from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.orm import validates
 from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy_serializer import SerializerMixin
@@ -36,6 +36,8 @@ class Cyclist(db.Model, SerializerMixin):
 class Race(db.Model, SerializerMixin):
     __tablename__ = 'races'
 
+    __table_args__ = (db.UniqueConstraint('name', 'date'),)
+
     serialize_rules = ('-registrations.race', '-cyclists.races')
 
     id = db.Column(db.Integer, primary_key=True)
@@ -59,7 +61,7 @@ class Race(db.Model, SerializerMixin):
 class Registration(db.Model, SerializerMixin):
     __tablename__ = 'registrations'
 
-    __tableargs__ = (db.UniqueConstraint('cyclist_id', 'race_id', name='_reg_uc'),)
+    __table_args__ = (db.UniqueConstraint('cyclist_id', 'race_id', name='_reg_uc'),)
 
     serialize_rules = ('-cyclist.registrations', '-race.registrations')
     
