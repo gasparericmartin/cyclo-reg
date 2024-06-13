@@ -107,6 +107,7 @@ form textarea {
 
 .card {
   /* justify-content: center; */
+  min-width: 500px;
   display: inline-grid;
   padding: 20px;
   background-color: #fff;
