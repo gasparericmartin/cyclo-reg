@@ -26,5 +26,5 @@ View, add, modify, and delete races on the races page accessible through the rac
 
 # Acknowledgments
 
-\* Justin Rodriguez for keeping me on track.
-\* Leo Stratus for constant encouragement and advice.
+* Justin Rodriguez for keeping me on track.
+* Leo Stratus for constant encouragement and advice.
