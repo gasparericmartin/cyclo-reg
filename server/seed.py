@@ -1,13 +1,7 @@
 #!/usr/bin/env python3
 
-# Standard library imports
 from random import randint, uniform, choice as rc
-import datetime
-
-# Remote library imports
 from faker import Faker
-
-# Local imports
 from app import app
 from models import db, Cyclist, Race, Registration
 

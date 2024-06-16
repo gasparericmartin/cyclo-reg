@@ -1,16 +1,11 @@
 #!/usr/bin/env python3
 
-# Standard library imports
 from models import Cyclist, Race, Registration
 from flask import request
 from flask_restful import Resource
 from config import app, db, api
-from flask import Flask, make_response, jsonify, request
-import os
+from flask import request
 import datetime
-# Add your model imports
-
-# Views go here!
 
 class Home(Resource):
     def get(self):
