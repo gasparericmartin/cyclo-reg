@@ -10,7 +10,7 @@ Clone this repository and save it to your local environment. Navigate to the ser
 
 ## Database
 
-Navigate to the server directory and run 'flask db migrate' to initialize the database on your machine. Alter the seed.py file as desired before running 'python seed.py' to seed the database. Please not that at this time there is no functionality for creating cyclists in the front end, so this must be done either through seed.py or flask shell.
+Navigate to the server directory and run "pipenv shell" to enter the virtual environment. Next, run "flask db migrate" to initialize the database on your machine, followed by "flask db upgrade head" to complete the migration. Alter the seed.py file as desired before running 'python seed.py' to seed the database. Please not that at this time there is no functionality for creating cyclists in the front end, so this must be done either through seed.py or flask shell.
 
 ## Server
 
