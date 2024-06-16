@@ -1,4 +1,4 @@
-import {useState, useEffect, forceUpdate} from 'react'
+import {useState} from 'react'
 import { useOutletContext } from 'react-router-dom'
 import RaceCard from '../components/RaceCard'
 import RaceInfo from '../components/RaceInfo'

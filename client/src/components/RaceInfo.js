@@ -5,16 +5,14 @@ import RegCard from './RegCard'
 
 function RaceInfo({race, del, show, setShow, patchRace}) {
     const {
-        id,
         name,
         date,
         location,
         length,
         registration_fee,
-        registrations
         } = race   
 
-    const {regs, setRegs} = useOutletContext()
+    const {regs} = useOutletContext()
     const regList = regs.filter((reg) => reg.race_id === race.id)
     const [update, setUpdate] = useState(false)
     const jsDate = new Date(date)

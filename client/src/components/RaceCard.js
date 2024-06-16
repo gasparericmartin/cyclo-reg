@@ -2,8 +2,8 @@ import {useState} from 'react'
 import UpdateRaceForm from './UpdateRaceForm'
 
 function RaceCard({race, handleRegClick, handleDeleteRace, patchRace}) {
-    const {id, name, date, location, 
-            length, registration_fee, registrations} = race 
+    const {name, date, location, 
+            length, registration_fee} = race 
     const [update, setUpdate] = useState(false)
     const jsDate = new Date(date)
         

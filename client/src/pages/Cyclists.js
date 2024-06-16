@@ -5,7 +5,7 @@ import CyclistCard from '../components/CyclistCard'
 
 function Cyclists() {
     const [cyclists, setCyclists] = useState([])
-    const {races, setRaces} = useOutletContext()
+    const {races} = useOutletContext()
     const [error, setError] = useState(false)
 
     useEffect(() => {

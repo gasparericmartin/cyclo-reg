@@ -4,10 +4,10 @@ import RegCard from './RegCard'
 import { useOutletContext } from 'react-router-dom'
 
 function CyclistCard({cyclist, races}) {
-    const {id, name, age, hometown, registrations} = cyclist
+    const {id, name, age, hometown} = cyclist
     const [showReg, setShowReg] = useState(false)
     const [newReg, setNewReg] = useState(false)
-    const {regs, setRegs} = useOutletContext()
+    const {regs} = useOutletContext()
     const regList = regs.filter((reg) => reg.cyclist_id === cyclist.id)
 
     return (
