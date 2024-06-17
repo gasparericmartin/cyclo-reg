@@ -29,7 +29,7 @@ def create_races():
 
     for x in range(10):
         race = Race(
-            name = fake.company(),
+            name = f'{fake.company()} Race',
             date = fake.date_time(),
             location = fake.city(),
             length = randint(20, 150),
