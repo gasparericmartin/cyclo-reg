@@ -4,7 +4,7 @@ import RegCard from './RegCard'
 import { useOutletContext } from 'react-router-dom'
 
 function CyclistCard({cyclist, races}) {
-    const {id, name, age, hometown} = cyclist
+    const {name, age, hometown} = cyclist
     const [showReg, setShowReg] = useState(false)
     const [newReg, setNewReg] = useState(false)
     const {regs} = useOutletContext()
